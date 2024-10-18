@@ -17271,8 +17271,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: brokerAddress
+      value: 192.168.158.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
       propertyPath: topicSubscribe
       value: HSEL/VW24/Spritzguss/TRN.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: topicsToSubscribeTo.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: topicsToSubscribeTo.Array.data[0]
+      value: Notaus
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: topicsToSubscribeTo.Array.data[1]
+      value: HSELVW/MachineMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: topicsToSubscribeTo.Array.data[2]
+      value: Mode
       objectReference: {fileID: 0}
     - target: {fileID: 4575068870214400997, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
       propertyPath: m_LocalPosition.x

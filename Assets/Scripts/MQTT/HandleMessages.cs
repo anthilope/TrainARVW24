@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,14 +12,21 @@ namespace MQTT_Messages
 
     [UnitTitle("MQTT: MessageReceived")]
     [UnitCategory("Events")]
-    public class MessageReceived : EventUnit<string>
+    public class MessageReceived : EventUnit<Tuple<string, string>>
     {
         [Inspectable]
-        [UnitHeaderInspectable("Compare String")]
-        public string compareString;
+        [UnitHeaderInspectable("Compare Topic")]
+        public string compareTopic;
+
+        [Inspectable]
+        [UnitHeaderInspectable("Compare Message")]
+        public string compareMessage;
 
         [DoNotSerialize]
         public ValueOutput message { get; private set; }
+
+        [DoNotSerialize]
+        public ValueOutput topic { get; private set; }
 
         [DoNotSerialize]
         public ValueOutput isMatch { get; private set; }
@@ -26,7 +35,7 @@ namespace MQTT_Messages
 
         public override EventHook GetHook(GraphReference reference)
         {
-            Debug.Log("Event registered: " + EventNames.MessageWasReceived);
+            //Debug.Log("Event registered: " + EventNames.MessageWasReceived);
             return new EventHook(EventNames.MessageWasReceived);
         }
 
@@ -34,15 +43,35 @@ namespace MQTT_Messages
         {
             base.Definition();
 
+            topic = ValueOutput<string>("Topic");
             message = ValueOutput<string>("Message");
             isMatch = ValueOutput<bool>("Is Match");
         }
 
-        protected override void AssignArguments(Flow flow, string messageArg)
+        protected override void AssignArguments(Flow flow, Tuple<string, string> args)
         {
-            flow.SetValue(message, messageArg);
-            bool match = messageArg == compareString;
+            string receivedTopic = args.Item1;
+            string receivedMessage = args.Item2;
+            flow.SetValue(topic, receivedTopic);
+            flow.SetValue(message, receivedMessage);
+            /*
+            bool match = receivedMessage == compareString;
             flow.SetValue(isMatch, match);
+            */
+
+            if (receivedMessage.Equals(compareMessage) && receivedTopic.Equals(compareTopic))
+            {
+                bool match = true;
+                flow.SetValue(isMatch, match);
+
+            }
+            else
+            {
+                bool match = false;
+                flow.SetValue(isMatch, match);
+            }
         }
     }
 }
+
+

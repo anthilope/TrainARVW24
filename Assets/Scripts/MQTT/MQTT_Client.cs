@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using TMPro;
 using Unity.VisualScripting;
 using MQTT_Messages;
+using System;
 
 
 
@@ -20,7 +21,8 @@ public class MQTT_Client : M2MqttUnityClient
     public GameObject debugObject;
 
     [Tooltip("Set the topic to subscribe. !!!ATTENTION!!! multi-level wildcard # subscribes to all topics")]
-    public string topicSubscribe = "";
+    public List<string> topicsToSubscribeTo = new List<string>();
+    private string topicSubscribe = "";
 
     public void TestPublish()
     {
@@ -46,11 +48,15 @@ public class MQTT_Client : M2MqttUnityClient
     public void TryConnection()
     {
         base.Connect();
+
     }
 
     protected override void SubscribeTopics()
     {
-        client.Subscribe(new string[] { topicSubscribe }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        foreach (var topic in topicsToSubscribeTo)
+        {
+            client.Subscribe(new string[] { topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        }
     }
 
     public void SubscribeToTopic(string topic)
@@ -107,19 +113,18 @@ public class MQTT_Client : M2MqttUnityClient
         // Convert the byte array to a string
         string receivedMessage = System.Text.Encoding.UTF8.GetString(message);
 
-        
+       Tuple<string, string> mqttArgs = new Tuple<string, string>(topic, receivedMessage);
 
+        string mqtt_message = mqttArgs.Item2;
         // Update the debug text
-        ChangeDebugText(receivedMessage);
+        ChangeDebugText(mqtt_message);
 
         // Trigger the Visual Scripting event
         //EventBus.Trigger(Visual_Scripting.VisualScriptingEventNames_messages.MessageWasReceived, receivedMessage);
-        EventBus.Trigger(EventNames.MessageWasReceived, receivedMessage);
+        EventBus.Trigger(EventNames.MessageWasReceived, mqttArgs);
 
 
 
-        // Invoke any Unity Events if needed
-        onMessageReceived?.Invoke(receivedMessage);
     }
 
 }
