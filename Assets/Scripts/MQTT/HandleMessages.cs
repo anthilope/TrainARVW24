@@ -29,7 +29,10 @@ namespace MQTT_Messages
         public ValueOutput topic { get; private set; }
 
         [DoNotSerialize]
-        public ValueOutput isMatch { get; private set; }
+        public ValueOutput isMatchTopic { get; private set; }
+
+        [DoNotSerialize]
+        public ValueOutput isMatchMessage { get; private set; }
 
         protected override bool register => true;
 
@@ -45,7 +48,8 @@ namespace MQTT_Messages
 
             topic = ValueOutput<string>("Topic");
             message = ValueOutput<string>("Message");
-            isMatch = ValueOutput<bool>("Is Match");
+            isMatchTopic = ValueOutput<bool>("Is Match Topic");
+            isMatchMessage = ValueOutput<bool>("Is Match Message");
         }
 
         protected override void AssignArguments(Flow flow, Tuple<string, string> args)
@@ -59,17 +63,25 @@ namespace MQTT_Messages
             flow.SetValue(isMatch, match);
             */
 
-            if (receivedMessage.Equals(compareMessage) && receivedTopic.Equals(compareTopic))
+
+            if (compareTopic.Equals(receivedTopic))
             {
-                bool match = true;
-                flow.SetValue(isMatch, match);
+                flow.SetValue(isMatchTopic, true);
+                if (compareMessage.Equals(receivedMessage))
+                {
+                    flow.SetValue(isMatchMessage, true);
+                }
+                else
+                {
+                    flow.SetValue(isMatchMessage, false);
+                }
 
             }
             else
             {
-                bool match = false;
-                flow.SetValue(isMatch, match);
-            }
+                flow.SetValue(isMatchTopic, false);
+				flow.SetValue(isMatchMessage, false);
+			}
         }
     }
 }

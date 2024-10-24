@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17280,7 +17279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
       propertyPath: topicsToSubscribeTo.Array.size
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
       propertyPath: topicsToSubscribeTo.Array.data[0]
@@ -17293,6 +17292,18 @@ PrefabInstance:
     - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
       propertyPath: topicsToSubscribeTo.Array.data[2]
       value: Mode
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: topicsToSubscribeTo.Array.data[3]
+      value: Poweron
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: topicsToSubscribeTo.Array.data[4]
+      value: "Schlie\xDFkraft"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667253509713123671, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
+      propertyPath: topicsToSubscribeTo.Array.data[5]
+      value: Werkzeugwinkel
       objectReference: {fileID: 0}
     - target: {fileID: 4575068870214400997, guid: 210de5f2d6c518740b1a88ddaddc0ef1, type: 3}
       propertyPath: m_LocalPosition.x
